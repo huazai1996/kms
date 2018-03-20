@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kms.dao.PermissionDao">
+	<insert id="add" parameterType="org.kms.pojo.Permission"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into Permission(perName,perType,url,perCode,parented,available)
+			values(#{perName},#{perType},#{url},#{perCode},#{parented},#{available})
+	</insert>
+	
+	<update id="update" parameterType="org.kms.pojo.Permission">
+		update Permission set perName=#{perName},perType=#{perType},url=#{url},perCode=#{perCode},parented=#{parented},available=#{available}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
+		delete from Permission where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="getAll" resultType="org.kms.pojo.Permission">
+		select * from Permission
+	</select>
+	
+	<sql id="conditionSql">
+		<if test="condition != null">
+			<where>
+				
+			</where>
+		</if>
+	</sql>
+	
+	<select id="getById" parameterType="int" resultType="org.kms.pojo.Permission">
+		select * from Permission where id = #{id}
+	</select>
+	
+	
+	<select id="getListByCondition" resultType="org.kms.pojo.Permission">
+		select * from Permission
+			<include refid="conditionSql"></include>
+		order by ${column} ${orderBy}
+			limit #{start},#{limit}
+	</select>
+	<select id="getCountByCondition" resultType="int">
+		select count(1) from Permission
+			<include refid="conditionSql"></include>
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>

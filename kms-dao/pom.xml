@@ -105,5 +105,15 @@
   		<version>4.1.6.RELEASE</version>
   		<scope>test</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>org.freemarker</groupId>
+  		<artifactId>freemarker</artifactId>
+  		<version>2.3.23</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.aptech.shiro.kms</groupId>
+  		<artifactId>kms-utils</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
 </project>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kms.dao.AdminDao">
+	<insert id="add" parameterType="org.kms.pojo.Admin"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into Admin(adminNumber,adminName,adminPassword)
+			values(#{adminNumber},#{adminName},#{adminPassword})
+	</insert>
+	
+	<update id="update" parameterType="org.kms.pojo.Admin">
+		update Admin set adminNumber=#{adminNumber},adminName=#{adminName},adminPassword=#{adminPassword}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
+		delete from Admin where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="getAll" resultType="org.kms.pojo.Admin">
+		select * from Admin
+	</select>
+	
+	<sql id="conditionSql">
+		<if test="condition != null">
+			<where>
+				
+			</where>
+		</if>
+	</sql>
+	
+	<select id="getById" parameterType="int" resultType="org.kms.pojo.Admin">
+		select * from Admin where id = #{id}
+	</select>
+	
+	
+	<select id="getListByCondition" resultType="org.kms.pojo.Admin">
+		select * from Admin
+			<include refid="conditionSql"></include>
+		order by ${column} ${orderBy}
+			limit #{start},#{limit}
+	</select>
+	<select id="getCountByCondition" resultType="int">
+		select count(1) from Admin
+			<include refid="conditionSql"></include>
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>
