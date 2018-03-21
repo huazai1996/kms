@@ -3,24 +3,24 @@
 <mapper namespace="org.kms.dao.AdminDao">
 	<insert id="add" parameterType="org.kms.pojo.Admin"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-		insert into Admin(adminNumber,adminName,adminPassword)
+		insert into tab_Admin(adminNumber,adminName,adminPassword)
 			values(#{adminNumber},#{adminName},#{adminPassword})
 	</insert>
 	
 	<update id="update" parameterType="org.kms.pojo.Admin">
-		update Admin set adminNumber=#{adminNumber},adminName=#{adminName},adminPassword=#{adminPassword}
+		update tab_Admin set adminNumber=#{adminNumber},adminName=#{adminName},adminPassword=#{adminPassword}
 		where id = #{id}
 	</update>
 	
 	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
-		delete from Admin where id in
+		delete from tab_Admin where id in
 		<foreach collection="array" item="item" open="(" close=")" separator=",">
 			#{item}
 		</foreach>
 	</delete>
 	
 	<select id="getAll" resultType="org.kms.pojo.Admin">
-		select * from Admin
+		select * from tab_Admin
 	</select>
 	
 	<sql id="conditionSql">
@@ -32,18 +32,18 @@
 	</sql>
 	
 	<select id="getById" parameterType="int" resultType="org.kms.pojo.Admin">
-		select * from Admin where id = #{id}
+		select * from tab_Admin where id = #{id}
 	</select>
 	
 	
 	<select id="getListByCondition" resultType="org.kms.pojo.Admin">
-		select * from Admin
+		select * from tab_Admin
 			<include refid="conditionSql"></include>
 		order by ${column} ${orderBy}
 			limit #{start},#{limit}
 	</select>
 	<select id="getCountByCondition" resultType="int">
-		select count(1) from Admin
+		select count(1) from tab_Admin
 			<include refid="conditionSql"></include>
 	</select>
 	

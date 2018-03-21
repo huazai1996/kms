@@ -112,6 +112,7 @@ public class ProjectUtils {
 				}
 			}
 			model.put("table_name", sb.toString());
+			model.put("t", "tab_");
 			
 			//声明一个list 存放列名
 			List<String> columnNames = new ArrayList<String>();

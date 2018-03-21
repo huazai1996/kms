@@ -3,24 +3,24 @@
 <mapper namespace="org.kms.dao.RoleDao">
 	<insert id="add" parameterType="org.kms.pojo.Role"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-		insert into Role(roleName,available)
+		insert into tab_Role(roleName,available)
 			values(#{roleName},#{available})
 	</insert>
 	
 	<update id="update" parameterType="org.kms.pojo.Role">
-		update Role set roleName=#{roleName},available=#{available}
+		update tab_Role set roleName=#{roleName},available=#{available}
 		where id = #{id}
 	</update>
 	
 	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
-		delete from Role where id in
+		delete from tab_Role where id in
 		<foreach collection="array" item="item" open="(" close=")" separator=",">
 			#{item}
 		</foreach>
 	</delete>
 	
 	<select id="getAll" resultType="org.kms.pojo.Role">
-		select * from Role
+		select * from tab_Role
 	</select>
 	
 	<sql id="conditionSql">
@@ -32,18 +32,18 @@
 	</sql>
 	
 	<select id="getById" parameterType="int" resultType="org.kms.pojo.Role">
-		select * from Role where id = #{id}
+		select * from tab_Role where id = #{id}
 	</select>
 	
 	
 	<select id="getListByCondition" resultType="org.kms.pojo.Role">
-		select * from Role
+		select * from tab_Role
 			<include refid="conditionSql"></include>
 		order by ${column} ${orderBy}
 			limit #{start},#{limit}
 	</select>
 	<select id="getCountByCondition" resultType="int">
-		select count(1) from Role
+		select count(1) from tab_Role
 			<include refid="conditionSql"></include>
 	</select>
 	

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kms.dao.StudentDao">
+	<insert id="add" parameterType="org.kms.pojo.Student"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into tab_Student(stuNumber,stuName,gradeid,address,birthday,gender,state,parkDate,tuition,foodfee,costid)
+			values(#{stuNumber},#{stuName},#{gradeid},#{address},#{birthday},#{gender},#{state},#{parkDate},#{tuition},#{foodfee},#{costid})
+	</insert>
+	
+	<update id="update" parameterType="org.kms.pojo.Student">
+		update tab_Student set stuNumber=#{stuNumber},stuName=#{stuName},gradeid=#{gradeid},address=#{address},birthday=#{birthday},gender=#{gender},state=#{state},parkDate=#{parkDate},tuition=#{tuition},foodfee=#{foodfee},costid=#{costid}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
+		delete from tab_Student where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="getAll" resultType="org.kms.pojo.Student">
+		select * from tab_Student
+	</select>
+	
+	<sql id="conditionSql">
+		<if test="condition != null">
+			<where>
+				
+			</where>
+		</if>
+	</sql>
+	
+	<select id="getById" parameterType="int" resultType="org.kms.pojo.Student">
+		select * from tab_Student where id = #{id}
+	</select>
+	
+	
+	<select id="getListByCondition" resultType="org.kms.pojo.Student">
+		select * from tab_Student
+			<include refid="conditionSql"></include>
+		order by ${column} ${orderBy}
+			limit #{start},#{limit}
+	</select>
+	<select id="getCountByCondition" resultType="int">
+		select count(1) from tab_Student
+			<include refid="conditionSql"></include>
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>

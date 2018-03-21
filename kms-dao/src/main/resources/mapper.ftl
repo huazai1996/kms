@@ -13,14 +13,14 @@
 	</update>
 	
 	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
-		delete from ${table_name} where id in
+		delete from ${t}${table_name} where id in
 		<foreach collection="array" item="item" open="(" close=")" separator=",">
 			${jing}{item}
 		</foreach>
 	</delete>
 	
 	<select id="getAll" resultType="org.${projectName}.pojo.${pojoName}">
-		select * from ${table_name}
+		select * from ${t}${table_name}
 	</select>
 	
 	<sql id="conditionSql">
@@ -32,18 +32,18 @@
 	</sql>
 	
 	<select id="getById" parameterType="int" resultType="org.${projectName}.pojo.${pojoName}">
-		select * from ${table_name} where id = ${jing}{id}
+		select * from ${t}${table_name} where id = ${jing}{id}
 	</select>
 	
 	
 	<select id="getListByCondition" resultType="org.${projectName}.pojo.${pojoName}">
-		select * from ${table_name}
+		select * from ${t}${table_name}
 			<include refid="conditionSql"></include>
 		order by ${daola}{column} ${daola}{orderBy}
 			limit ${jing}{start},${jing}{limit}
 	</select>
 	<select id="getCountByCondition" resultType="int">
-		select count(1) from ${table_name}
+		select count(1) from ${t}${table_name}
 			<include refid="conditionSql"></include>
 	</select>
 	

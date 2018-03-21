@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kms.dao.RecruitDao">
+	<insert id="add" parameterType="org.kms.pojo.Recruit"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into tab_Recruit(name,birthday,gender,estimateparkdate,phone,refund,teaId)
+			values(#{name},#{birthday},#{gender},#{estimateparkdate},#{phone},#{refund},#{teaId})
+	</insert>
+	
+	<update id="update" parameterType="org.kms.pojo.Recruit">
+		update tab_Recruit set name=#{name},birthday=#{birthday},gender=#{gender},estimateparkdate=#{estimateparkdate},phone=#{phone},refund=#{refund},teaId=#{teaId}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
+		delete from tab_Recruit where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="getAll" resultMap="hehe">
+		select * from tab_Recruit
+	</select>
+	
+	<resultMap type="org.kms.pojo.Recruit" id="hehe" autoMapping="true">
+		<id column="id" property="id"/>
+		<association property="teacher" javaType="org.kms.pojo.Teacher" column="teaId" select="org.kms.dao.TeacherDao.getById" ></association>
+	</resultMap>
+	
+	
+	<sql id="conditionSql">
+		<if test="condition != null">
+			<where>
+				<if test="condition.name != null and condition.name != ''">
+					name like concat('%',#{condition.name},'%')
+				</if>
+				<if test="condition.id != null and condition.id != ''">
+					id = #{condition.id}
+				</if>
+				<if test="condition.refund != null and condition.refund != ''">
+					refund = #{condition.refund}
+				</if>
+				<if test="condition.phone != null and condition.phone != ''">
+					phone = #{condition.phone}
+				</if>
+				
+				
+			</where>
+		</if>
+	</sql>
+	
+	<select id="getById" parameterType="int" resultType="org.kms.pojo.Recruit">
+		select * from tab_Recruit where id = #{id}
+	</select>
+	
+	
+	<select id="getListByCondition" resultMap="hehe">
+		select * from tab_Recruit
+			<include refid="conditionSql"></include>
+		order by ${column} ${orderBy}
+			limit #{start},#{limit}
+	</select>
+	<select id="getCountByCondition" resultType="int">
+		select count(1) from tab_Recruit
+			<include refid="conditionSql"></include>
+	</select>
+</mapper>

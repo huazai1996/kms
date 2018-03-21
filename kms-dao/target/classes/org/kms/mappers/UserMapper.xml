@@ -3,24 +3,24 @@
 <mapper namespace="org.kms.dao.UserDao">
 	<insert id="add" parameterType="org.kms.pojo.User"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-		insert into User(userNumber,userName,password,parentId,state,gender,roleId,address,birthday,salt,schoolId)
+		insert into tab_User(userNumber,userName,password,parentId,state,gender,roleId,address,birthday,salt,schoolId)
 			values(#{userNumber},#{userName},#{password},#{parentId},#{state},#{gender},#{roleId},#{address},#{birthday},#{salt},#{schoolId})
 	</insert>
 	
 	<update id="update" parameterType="org.kms.pojo.User">
-		update User set userNumber=#{userNumber},userName=#{userName},password=#{password},parentId=#{parentId},state=#{state},gender=#{gender},roleId=#{roleId},address=#{address},birthday=#{birthday},salt=#{salt},schoolId=#{schoolId}
+		update tab_User set userNumber=#{userNumber},userName=#{userName},password=#{password},parentId=#{parentId},state=#{state},gender=#{gender},roleId=#{roleId},address=#{address},birthday=#{birthday},salt=#{salt},schoolId=#{schoolId}
 		where id = #{id}
 	</update>
 	
 	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
-		delete from User where id in
+		delete from tab_User where id in
 		<foreach collection="array" item="item" open="(" close=")" separator=",">
 			#{item}
 		</foreach>
 	</delete>
 	
 	<select id="getAll" resultType="org.kms.pojo.User">
-		select * from User
+		select * from tab_User
 	</select>
 	
 	<sql id="conditionSql">
@@ -32,18 +32,18 @@
 	</sql>
 	
 	<select id="getById" parameterType="int" resultType="org.kms.pojo.User">
-		select * from User where id = #{id}
+		select * from tab_User where id = #{id}
 	</select>
 	
 	
 	<select id="getListByCondition" resultType="org.kms.pojo.User">
-		select * from User
+		select * from tab_User
 			<include refid="conditionSql"></include>
 		order by ${column} ${orderBy}
 			limit #{start},#{limit}
 	</select>
 	<select id="getCountByCondition" resultType="int">
-		select count(1) from User
+		select count(1) from tab_User
 			<include refid="conditionSql"></include>
 	</select>
 	

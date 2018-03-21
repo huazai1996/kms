@@ -3,24 +3,24 @@
 <mapper namespace="org.kms.dao.PermissionDao">
 	<insert id="add" parameterType="org.kms.pojo.Permission"
 		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
-		insert into Permission(perName,perType,url,perCode,parented,available)
+		insert into tab_Permission(perName,perType,url,perCode,parented,available)
 			values(#{perName},#{perType},#{url},#{perCode},#{parented},#{available})
 	</insert>
 	
 	<update id="update" parameterType="org.kms.pojo.Permission">
-		update Permission set perName=#{perName},perType=#{perType},url=#{url},perCode=#{perCode},parented=#{parented},available=#{available}
+		update tab_Permission set perName=#{perName},perType=#{perType},url=#{url},perCode=#{perCode},parented=#{parented},available=#{available}
 		where id = #{id}
 	</update>
 	
 	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
-		delete from Permission where id in
+		delete from tab_Permission where id in
 		<foreach collection="array" item="item" open="(" close=")" separator=",">
 			#{item}
 		</foreach>
 	</delete>
 	
 	<select id="getAll" resultType="org.kms.pojo.Permission">
-		select * from Permission
+		select * from tab_Permission
 	</select>
 	
 	<sql id="conditionSql">
@@ -32,18 +32,18 @@
 	</sql>
 	
 	<select id="getById" parameterType="int" resultType="org.kms.pojo.Permission">
-		select * from Permission where id = #{id}
+		select * from tab_Permission where id = #{id}
 	</select>
 	
 	
 	<select id="getListByCondition" resultType="org.kms.pojo.Permission">
-		select * from Permission
+		select * from tab_Permission
 			<include refid="conditionSql"></include>
 		order by ${column} ${orderBy}
 			limit #{start},#{limit}
 	</select>
 	<select id="getCountByCondition" resultType="int">
-		select count(1) from Permission
+		select count(1) from tab_Permission
 			<include refid="conditionSql"></include>
 	</select>
 	

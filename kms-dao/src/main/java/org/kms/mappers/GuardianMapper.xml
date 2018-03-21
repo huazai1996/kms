@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kms.dao.GuardianDao">
+	<insert id="add" parameterType="org.kms.pojo.Guardian"
+		useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+		insert into tab_Guardian(stuId,relation,age,name,work,phone)
+			values(#{stuId},#{relation},#{age},#{name},#{work},#{phone})
+	</insert>
+	
+	<update id="update" parameterType="org.kms.pojo.Guardian">
+		update tab_Guardian set stuId=#{stuId},relation=#{relation},age=#{age},name=#{name},work=#{work},phone=#{phone}
+		where id = #{id}
+	</update>
+	
+	<delete id="deleteByIds" parameterType="java.lang.reflect.Array">
+		delete from tab_Guardian where id in
+		<foreach collection="array" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<select id="getAll" resultType="org.kms.pojo.Guardian">
+		select * from tab_Guardian
+	</select>
+	
+	<sql id="conditionSql">
+		<if test="condition != null">
+			<where>
+				
+			</where>
+		</if>
+	</sql>
+	
+	<select id="getById" parameterType="int" resultType="org.kms.pojo.Guardian">
+		select * from tab_Guardian where id = #{id}
+	</select>
+	
+	
+	<select id="getListByCondition" resultType="org.kms.pojo.Guardian">
+		select * from tab_Guardian
+			<include refid="conditionSql"></include>
+		order by ${column} ${orderBy}
+			limit #{start},#{limit}
+	</select>
+	<select id="getCountByCondition" resultType="int">
+		select count(1) from tab_Guardian
+			<include refid="conditionSql"></include>
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>
